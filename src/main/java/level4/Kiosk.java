@@ -14,14 +14,21 @@ public class Kiosk {
     }
 
     public void start(){    //시작하면서 메뉴 목록이랑 사용자가 입력해야할 키 알려주는 메서드
-        System.out.println("카테고리 선택");
+        while (true){
+            System.out.println("카테고리 선택 (종료 : 0)");
 
-        for (int i = 0; i < categories.size(); i++) {
-            System.out.println((i + 1) + ". " + categories.get(i).getCategory());
+            for (int i = 0; i < categories.size(); i++) {
+                System.out.println((i + 1) + ". " + categories.get(i).getCategory());
+            }
+
+            String inputCategory = sc.nextLine();
+
+            if(exitProgram(inputCategory)){   //프로그램 종료 메서드 호출
+                break;
+            }
+
+            compareCategory(inputCategory); //고른 카테고리 판별 메서드 호출
         }
-
-        String inputCategory = sc.nextLine();
-        compareCategory(inputCategory); //고른 카테고리 판별 메서드 호출
     }
 
     private void compareInput(){    //사용자가 입력한 번호에 해당하는 메뉴 찾고 저장하는 메서드
@@ -61,7 +68,7 @@ public class Kiosk {
 
             printSelectedMenu(menuName);    //선택한 메뉴 목록, 가격 출력 메서드 호출
 
-            if(!exitProgram(inputNum)){   //프로그램 종료 메서드 호출
+            if(exitProgram(inputNum)){   //프로그램 종료 메서드 호출
                 break;
             }
         }
@@ -78,7 +85,7 @@ public class Kiosk {
     }
 
     private boolean exitProgram(String inputNum){    //프로그램 종료 메서드
-        return !"0".equals(inputNum);
+        return "0".equals(inputNum);
     }
 
     private void compareCategory(String category){ // 고른 카테고리에 따라 분기점
