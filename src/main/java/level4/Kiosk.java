@@ -17,9 +17,11 @@ public class Kiosk {
         while (true){
             System.out.println("카테고리 선택 (종료 : 0)");
 
+            System.out.println("0. 종료");
             for (int i = 0; i < categories.size(); i++) {
                 System.out.println((i + 1) + ". " + categories.get(i).getCategory());
             }
+
 
             String inputCategory = sc.nextLine();
 
@@ -57,12 +59,16 @@ public class Kiosk {
                     MenuItem.totalPrice(menuList.get(3).getPrice());
                     break;
 
+                case "000" :
+                    System.out.println("뒤로");
+                    return;
+
                 case "0" :
                     System.out.println("프로그램 종료");
                     break;
 
                 default :
-                    System.out.println("잘못입력했습니다. 다시 입력해주세요 (0: 종료, 1 ~ 4 : 메뉴선택");
+                    System.out.println("잘못입력했습니다. 다시 입력해주세요 (0: 종료, 1 ~ 4 : 메뉴선택, 000 : 뒤로");
                     break;
             }
 
@@ -85,7 +91,7 @@ public class Kiosk {
     }
 
     private boolean exitProgram(String inputNum){    //프로그램 종료 메서드
-        return "0".equals(inputNum);
+        return "0".equals(inputNum) || "000".equals(inputNum);
     }
 
     private void compareCategory(String category){ // 고른 카테고리에 따라 분기점
@@ -114,6 +120,6 @@ public class Kiosk {
         }
 
         System.out.println("0. 종료 | 종료");
-        System.out.print("메뉴를 선택해주세요. (0 : 종료, 1 ~ 4 : 메뉴선택) : ");
+        System.out.print("메뉴를 선택해주세요. (0 : 종료, 1 ~ 4 : 메뉴선택, 000 : 돌아가기) : ");
     }
 }
