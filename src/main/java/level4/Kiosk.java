@@ -30,14 +30,22 @@ public class Kiosk {
                 break;
             }
 
-            compareCategory(inputCategory); //고른 카테고리 판별 메서드 호출
+            if(compareCategory(inputCategory)) { //고른 카테고리 판별 및 반환값에 따라 프로그램 종료
+                break;
+            }
         }
     }
 
-    private void compareInput(){    //사용자가 입력한 번호에 해당하는 메뉴 찾고 저장하는 메서드
+    private String compareInput(){    //사용자가 입력한 번호에 해당하는 메뉴 찾고 저장하는 메서드
+        String input = "";
 
         while (true){
             String inputNum = sc.nextLine();    //사용자한테 입력받는 메뉴 번호
+
+            if ("0".equals(inputNum)) {
+                System.out.println("프로그램 종료");
+                return "0"; // 종료를 위해 inputNum 반환
+            }
 
             switch (inputNum){
                 case "1" :
@@ -61,23 +69,24 @@ public class Kiosk {
 
                 case "000" :
                     System.out.println("뒤로");
-                    return;
-
-                case "0" :
-                    System.out.println("프로그램 종료");
-                    break;
+                    return inputNum;
 
                 default :
                     System.out.println("잘못입력했습니다. 다시 입력해주세요 (0: 종료, 1 ~ 4 : 메뉴선택, 000 : 뒤로");
                     break;
             }
 
-            printSelectedMenu(menuName);    //선택한 메뉴 목록, 가격 출력 메서드 호출
+            if(menuName != null)
+                printSelectedMenu(menuName);    //선택한 메뉴 목록, 가격 출력 메서드 호출
+
+            input = inputNum;
 
             if(exitProgram(inputNum)){   //프로그램 종료 메서드 호출
                 break;
             }
+
         }
+        return input;
     }
 
     private void printSelectedMenu(List<String> menuName){  //고른 메뉴 이름, 가격 알려주는 메서드
@@ -91,22 +100,23 @@ public class Kiosk {
     }
 
     private boolean exitProgram(String inputNum){    //프로그램 종료 메서드
-        return "0".equals(inputNum) || "000".equals(inputNum);
+        return "0".equals(inputNum);
     }
 
-    private void compareCategory(String category){ // 고른 카테고리에 따라 분기점
+    private boolean compareCategory(String category){ // 고른 카테고리에 따라 분기점
         if("1".equals(category)){
             menuList = categories.get(0).getMenuItems();    //1번이니까 햄버거 저장
             selectMenu(category);   //메뉴 출력 메서드 호출
-            compareInput(); //사용자가 입력한 번호에 해당하는 메뉴 찾고 저장하는 메서드 호출
         } else if("2".equals(category)){
             menuList = categories.get(1).getMenuItems();    //2번이니까 음료수 저장
             selectMenu(category);
-            compareInput();
         } else {
             System.out.println("잘못 입력하셨습니다. 다시입력해주세요");
             start();    //다시 시작부터
         }
+
+        String exit = compareInput();
+        return exitProgram(exit);
     }
 
     private void selectMenu(String category){    //메뉴 출력
