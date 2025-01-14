@@ -8,6 +8,7 @@ public class Kiosk {
     private Scanner sc = new Scanner(System.in);
     private List<Menu> categories;
     private List<MenuItem> menuList;
+    private List<String> menuName = new ArrayList<>();  //고른 메뉴 이름 저장용
 
     public Kiosk(List<Menu> categories) {
         this.categories = categories;
@@ -34,7 +35,6 @@ public class Kiosk {
     }
 
     private void compareInput(){    //사용자가 입력한 번호에 해당하는 메뉴 찾고 저장하는 메서드
-        List<String> menuName = new ArrayList<>();  //고른 메뉴 이름 저장용
 
         while (true){
             String inputNum = sc.nextLine();    //사용자한테 입력받는 메뉴 번호
