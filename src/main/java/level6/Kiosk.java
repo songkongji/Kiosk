@@ -76,15 +76,14 @@ public class Kiosk {
                     break;
             }
 
-            if(!menuName.isEmpty())
-                printSelectedMenu(menuName, category);    //선택한 메뉴 목록, 가격 출력 메서드 호출
-
             input = inputNum;
 
             if(exitProgram(inputNum)){   //프로그램 종료 메서드 호출
                 break;
             }
 
+            if(!menuName.isEmpty())
+                printSelectedMenu(menuName, category);    //선택한 메뉴 목록, 가격 출력 메서드 호출
         }
         return input;
     }
@@ -93,6 +92,7 @@ public class Kiosk {
         System.out.println("[ ORDER MENU ] \n4. Orders     | 장바구니를 확인 후 주문합니다.\n5. Cancel     | 진행중인 주문을 취소합니다.");
 
         String input = sc.nextLine();
+
         if("4".equals(input)){
             System.out.println("아래와 같이 주문 하시겠습니까?\n[ Orders ]");
             for (String menu : menuName) {
@@ -100,11 +100,14 @@ public class Kiosk {
             }
             System.out.println("[ Total }");
             System.out.println("가격 : " + MenuItem.getTotalPrice() + "원");
-            System.out.println("1. 주문     2. 메뉴판");
+            System.out.println("1. 주문     2. 메뉴판으로 돌아가기");
             String selectInput = sc.nextLine();
 
             if ("1".equals(selectInput)){
-                System.out.println("주문이 완료되었습니다. 금액은 " + MenuItem.getTotalPrice() + "원 입니다.\n계속 주문하려면 1 ~ 4 입력, 종료시 0 입력");
+                System.out.println("주문이 완료되었습니다. 금액은 " + MenuItem.getTotalPrice() + "원 입니다.");
+                MenuItem.totalPrice(-MenuItem.getTotalPrice());
+                menuName.removeAll(menuName);   //주문 완료시 장바구니 다 비우기
+                selectMenu(category);
             } else if ("2".equals(selectInput)) {
                 selectMenu(category);
             } else {
@@ -120,6 +123,8 @@ public class Kiosk {
             printSelectedMenu(menuName, category);
         }
     }
+
+
 
     private boolean exitProgram(String inputNum){    //프로그램 종료 메서드
         return "0".equals(inputNum);
