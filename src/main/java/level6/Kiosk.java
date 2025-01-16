@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-    private Scanner sc = new Scanner(System.in);
-    private List<Menu> categories;
+    private final Scanner sc = new Scanner(System.in);
+    private final List<Menu> categories;
     private List<level4.MenuItem> menuList;
-    private List<String> menuName = new ArrayList<>();  //고른 메뉴 이름 저장용
+    private final List<String> menuName = new ArrayList<>();  //고른 메뉴 이름 저장용
 
     public Kiosk(List<Menu> categories) {
         this.categories = categories;
@@ -54,6 +54,7 @@ public class Kiosk {
                     input = inputReturn(inputNum);
                     addMenu(input, inputNum);
                     break;
+
                 case "2" :
                     input = inputReturn(inputNum);
                     addMenu(input, inputNum);
@@ -78,7 +79,7 @@ public class Kiosk {
                     break;
             }
 
-            if(menuName != null)
+            if(!menuName.isEmpty())
                 printSelectedMenu(menuName);    //선택한 메뉴 목록, 가격 출력 메서드 호출
 
             input = inputNum;
@@ -145,9 +146,9 @@ public class Kiosk {
         if("1".equals(input)){
             menuName.add(menuList.get(index).getFoodName());    //고른 메뉴 이름 저장
             level4.MenuItem.totalPrice(menuList.get(index).getPrice());    //고른 메뉴 가격 저장
-            System.out.println(menuList.get(index).getFoodName() + " 가 장바구니에 추가되었습니다.");
+            System.out.println(menuList.get(index).getFoodName() + "가 장바구니에 추가되었습니다. 계속진행해주세요");
         } else if ("2".equals(input)) {
-            System.out.println("이전");
+            System.out.println("취소되었습니다. 계속 진행해주세요");
         }
     }
 }
