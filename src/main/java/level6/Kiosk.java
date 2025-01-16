@@ -51,14 +51,7 @@ public class Kiosk {
             switch (inputNum){
                 case "1" :
                     input = inputReturn(inputNum);
-                    if("1".equals(input)) {
-                        menuName.add(menuList.get(0).getFoodName());    //고른 메뉴 이름 저장
-                        level4.MenuItem.totalPrice(menuList.get(0).getPrice());    //고른 메뉴 가격 저장
-                        System.out.println(menuList.get(0).getFoodName() + "이 장바구니에 추가되었습니다.");
-                        selectMenu("1");
-                    } else if ("2".equals(input)) {
-                        selectMenu("1");
-                    }
+                    addMenu(input);
                     break;
                 case "2" :
                     menuName.add(menuList.get(1).getFoodName());
@@ -141,8 +134,21 @@ public class Kiosk {
         System.out.print("메뉴를 선택해주세요. (0 : 종료, 1 ~ 4 : 메뉴선택, 000 : 돌아가기) : ");
     }
 
-    private String inputReturn(String input) {  //compareInput에서 중복되는 코드 리펙토링한 메서드
+    private String inputReturn(String input) {  //compareInput에서 장바구니에 추가할지 여부 확인
         System.out.println(menuList.get(Integer.parseInt(input) - 1) +"\n위 메뉴를 장바구니에 추가하시겠습니까? \n1. 확인         2.취소");
         return sc.nextLine();
+    }
+
+    private void addMenu(String input){
+        int index = Integer.parseInt(input) - 1;
+        if("1".equals(input)){
+            menuName.add(menuList.get(index).getFoodName());    //고른 메뉴 이름 저장
+            level4.MenuItem.totalPrice(menuList.get(index).getPrice());    //고른 메뉴 가격 저장
+            System.out.println(menuList.get(index).getFoodName() + " 가 장바구니에 추가되었습니다.");
+            selectMenu("1");
+        } else if ("2".equals(input)) {
+            System.out.println("이전");
+            selectMenu("1");
+        }
     }
 }
