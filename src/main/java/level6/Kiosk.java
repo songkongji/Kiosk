@@ -1,4 +1,6 @@
-package level4;
+package level6;
+
+import level4.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.Scanner;
 public class Kiosk {
     private Scanner sc = new Scanner(System.in);
     private List<Menu> categories;
-    private List<MenuItem> menuList;
+    private List<level4.MenuItem> menuList;
     private List<String> menuName = new ArrayList<>();  //고른 메뉴 이름 저장용
 
     public Kiosk(List<Menu> categories) {
@@ -46,25 +48,31 @@ public class Kiosk {
                 System.out.println("프로그램 종료");
                 return "0"; // 종료를 위해 0 반환
             }
-
             switch (inputNum){
                 case "1" :
-                    menuName.add(menuList.get(0).getFoodName());    //고른 메뉴 이름 저장
-                    MenuItem.totalPrice(menuList.get(0).getPrice());    //고른 메뉴 가격 저장
+                    input = inputReturn(inputNum);
+                    if("1".equals(input)) {
+                        menuName.add(menuList.get(0).getFoodName());    //고른 메뉴 이름 저장
+                        level4.MenuItem.totalPrice(menuList.get(0).getPrice());    //고른 메뉴 가격 저장
+                        System.out.println(menuList.get(0).getFoodName() + "이 장바구니에 추가되었습니다.");
+                        selectMenu("1");
+                    } else if ("2".equals(input)) {
+                        selectMenu("1");
+                    }
                     break;
                 case "2" :
                     menuName.add(menuList.get(1).getFoodName());
-                    MenuItem.totalPrice(menuList.get(1).getPrice());
+                    level4.MenuItem.totalPrice(menuList.get(1).getPrice());
                     break;
 
                 case "3" :
                     menuName.add(menuList.get(2).getFoodName());
-                    MenuItem.totalPrice(menuList.get(2).getPrice());
+                    level4.MenuItem.totalPrice(menuList.get(2).getPrice());
                     break;
 
                 case "4" :
                     menuName.add(menuList.get(3).getFoodName());
-                    MenuItem.totalPrice(menuList.get(3).getPrice());
+                    level4.MenuItem.totalPrice(menuList.get(3).getPrice());
                     break;
 
                 case "000" :
@@ -115,7 +123,7 @@ public class Kiosk {
             start();    //다시 시작부터
         }
 
-        String exit = compareInput();   //고른 카테고리 값 종료 메서드에 보내기
+        String exit = compareInput();   //메뉴 고르는 메서드 호출하면서 반환값 받기
         return exitProgram(exit);
     }
 
@@ -131,5 +139,10 @@ public class Kiosk {
 
         System.out.println("0. 종료 | 종료");
         System.out.print("메뉴를 선택해주세요. (0 : 종료, 1 ~ 4 : 메뉴선택, 000 : 돌아가기) : ");
+    }
+
+    private String inputReturn(String input) {  //compareInput에서 중복되는 코드 리펙토링한 메서드
+        System.out.println(menuList.get(Integer.parseInt(input) - 1) +"\n위 메뉴를 장바구니에 추가하시겠습니까? \n1. 확인         2.취소");
+        return sc.nextLine();
     }
 }
