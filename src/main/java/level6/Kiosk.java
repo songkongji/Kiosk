@@ -139,7 +139,7 @@ public class Kiosk {
         return sc.nextLine();
     }
 
-    private void addMenu(String input){
+    private void addMenu(String input){ //compareInput에서 장바구니 추가 메서드
         int index = Integer.parseInt(input) - 1;
         if("1".equals(input)){
             menuName.add(menuList.get(index).getFoodName());    //고른 메뉴 이름 저장
