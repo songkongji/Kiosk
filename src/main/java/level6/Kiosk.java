@@ -48,24 +48,25 @@ public class Kiosk {
                 System.out.println("프로그램 종료");
                 return "0"; // 종료를 위해 0 반환
             }
+
             switch (inputNum){
                 case "1" :
                     input = inputReturn(inputNum);
-                    addMenu(input);
+                    addMenu(input, inputNum);
                     break;
                 case "2" :
-                    menuName.add(menuList.get(1).getFoodName());
-                    level4.MenuItem.totalPrice(menuList.get(1).getPrice());
+                    input = inputReturn(inputNum);
+                    addMenu(input, inputNum);
                     break;
 
                 case "3" :
-                    menuName.add(menuList.get(2).getFoodName());
-                    level4.MenuItem.totalPrice(menuList.get(2).getPrice());
+                    input = inputReturn(inputNum);
+                    addMenu(input, inputNum);
                     break;
 
                 case "4" :
-                    menuName.add(menuList.get(3).getFoodName());
-                    level4.MenuItem.totalPrice(menuList.get(3).getPrice());
+                    input = inputReturn(inputNum);
+                    addMenu(input, inputNum);
                     break;
 
                 case "000" :
@@ -139,16 +140,14 @@ public class Kiosk {
         return sc.nextLine();
     }
 
-    private void addMenu(String input){ //compareInput에서 장바구니 추가 메서드
-        int index = Integer.parseInt(input) - 1;
+    private void addMenu(String input, String inputNum){ //compareInput에서 장바구니 추가 메서드
+        int index = Integer.parseInt(inputNum) - 1;
         if("1".equals(input)){
             menuName.add(menuList.get(index).getFoodName());    //고른 메뉴 이름 저장
             level4.MenuItem.totalPrice(menuList.get(index).getPrice());    //고른 메뉴 가격 저장
             System.out.println(menuList.get(index).getFoodName() + " 가 장바구니에 추가되었습니다.");
-            selectMenu("1");
         } else if ("2".equals(input)) {
             System.out.println("이전");
-            selectMenu("1");
         }
     }
 }
