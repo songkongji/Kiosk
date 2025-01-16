@@ -1,14 +1,12 @@
 package level6;
 
-import level4.MenuItem;
-
 import java.util.List;
 
 public class Menu {
-    private List<level4.MenuItem> menuItems;
+    private List<MenuItem> menuItems;
     private String category;
 
-    public Menu(String category, List<level4.MenuItem> menuItems) {
+    public Menu(String category, List<MenuItem> menuItems) {
         this.category = category;
         this.menuItems = menuItems;
     }

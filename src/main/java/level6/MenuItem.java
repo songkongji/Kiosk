@@ -25,7 +25,7 @@ public class MenuItem {
         return price;
     }
 
-    public static void totalPrice(int price){   //선택한 메뉴 가격 더하기
+    public static void totalPrice(long price){   //선택한 메뉴 가격 더하기
         totalPrice += price;
     }
 

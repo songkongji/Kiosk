@@ -1,7 +1,5 @@
 package level6;
 
-import level4.MenuItem;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,7 +7,7 @@ import java.util.Scanner;
 public class Kiosk {
     private final Scanner sc = new Scanner(System.in);
     private final List<Menu> categories;
-    private List<level4.MenuItem> menuList;
+    private List<MenuItem> menuList;
     private final List<String> menuName = new ArrayList<>();  //고른 메뉴 이름 저장용
 
     public Kiosk(List<Menu> categories) {
@@ -25,7 +23,6 @@ public class Kiosk {
                 System.out.println((i + 1) + ". " + categories.get(i).getCategory());
             }
 
-
             String inputCategory = sc.nextLine();
 
             if(exitProgram(inputCategory)){   //프로그램 종료 메서드 호출
@@ -38,7 +35,7 @@ public class Kiosk {
         }
     }
 
-    private String compareInput(){    //사용자가 입력한 번호에 해당하는 메뉴 찾고 저장하는 메서드
+    private String compareInput(String category){    //사용자가 입력한 번호에 해당하는 메뉴 찾고 저장하는 메서드
         String input = "";
 
         while (true){
@@ -80,7 +77,7 @@ public class Kiosk {
             }
 
             if(!menuName.isEmpty())
-                printSelectedMenu(menuName);    //선택한 메뉴 목록, 가격 출력 메서드 호출
+                printSelectedMenu(menuName, category);    //선택한 메뉴 목록, 가격 출력 메서드 호출
 
             input = inputNum;
 
@@ -92,14 +89,32 @@ public class Kiosk {
         return input;
     }
 
-    private void printSelectedMenu(List<String> menuName){  //고른 메뉴 이름, 가격 알려주는 메서드
-        System.out.println("선택한 메뉴 목록");
+    private void printSelectedMenu(List<String> menuName, String category){  //고른 메뉴 이름, 가격 알려주는 메서드
+        System.out.println("[ ORDER MENU ] \n4. Orders     | 장바구니를 확인 후 주문합니다.\n5. Cancel     | 진행중인 주문을 취소합니다.");
 
-        for (String menu : menuName) {
-            System.out.println(menu);
+        String input = sc.nextLine();
+        if("4".equals(input)){
+            System.out.println("아래와 같이 주문 하시겠습니까?\n[ Orders ]");
+            for (String menu : menuName) {
+                System.out.println(menu);
+            }
+            System.out.println("[ Total }");
+            System.out.println("가격 : " + MenuItem.getTotalPrice() + "원");
+            System.out.println("1. 주문     2. 메뉴판");
+            String selectInput = sc.nextLine();
+
+            if ("1".equals(selectInput)){
+                System.out.println("주문이 완료되었습니다. 금액은 " + MenuItem.getTotalPrice() + "원 입니다.\n계속 주문하려면 1 ~ 4 입력, 종료시 0 입력");
+            } else if ("2".equals(selectInput)) {
+                selectMenu(category);
+            } else {
+                System.out.println("잘못 입력하셨습니다.");
+            }
+        } else if ("5".equals(input)) {
+            menuName.removeAll(menuName);
+            MenuItem.totalPrice(-MenuItem.getTotalPrice());
+            System.out.println("장바구니가 초기화됐습니다. 다시 선택하세요.(1 ~ 4 입력시 메뉴선택, 0 입력시 종료");
         }
-
-        System.out.println("가격 : " + MenuItem.getTotalPrice() + "원");
     }
 
     private boolean exitProgram(String inputNum){    //프로그램 종료 메서드
@@ -118,7 +133,7 @@ public class Kiosk {
             start();    //다시 시작부터
         }
 
-        String exit = compareInput();   //메뉴 고르는 메서드 호출하면서 반환값 받기
+        String exit = compareInput(category);   //메뉴 고르는 메서드 호출하면서 반환값 받기
         return exitProgram(exit);
     }
 
@@ -145,10 +160,12 @@ public class Kiosk {
         int index = Integer.parseInt(inputNum) - 1;
         if("1".equals(input)){
             menuName.add(menuList.get(index).getFoodName());    //고른 메뉴 이름 저장
-            level4.MenuItem.totalPrice(menuList.get(index).getPrice());    //고른 메뉴 가격 저장
+            MenuItem.totalPrice(menuList.get(index).getPrice());    //고른 메뉴 가격 저장
             System.out.println(menuList.get(index).getFoodName() + "가 장바구니에 추가되었습니다. 계속진행해주세요");
         } else if ("2".equals(input)) {
             System.out.println("취소되었습니다. 계속 진행해주세요");
+        } else {
+            System.out.println("잘못 입력하셨습니다. 다시 진행해주세요");
         }
     }
 }
