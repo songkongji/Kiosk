@@ -49,22 +49,22 @@ public class Kiosk {
             switch (inputNum){
                 case "1" :
                     input = inputReturn(inputNum);
-                    addMenu(input, inputNum);
+                    addMenu(input, inputNum, category);
                     break;
 
                 case "2" :
                     input = inputReturn(inputNum);
-                    addMenu(input, inputNum);
+                    addMenu(input, inputNum, category);
                     break;
 
                 case "3" :
                     input = inputReturn(inputNum);
-                    addMenu(input, inputNum);
+                    addMenu(input, inputNum, category);
                     break;
 
                 case "4" :
                     input = inputReturn(inputNum);
-                    addMenu(input, inputNum);
+                    addMenu(input, inputNum, category);
                     break;
 
                 case "000" :
@@ -109,11 +109,15 @@ public class Kiosk {
                 selectMenu(category);
             } else {
                 System.out.println("잘못 입력하셨습니다.");
+                printSelectedMenu(menuName, category);
             }
         } else if ("5".equals(input)) {
             menuName.removeAll(menuName);
             MenuItem.totalPrice(-MenuItem.getTotalPrice());
             System.out.println("장바구니가 초기화됐습니다. 다시 선택하세요.(1 ~ 4 입력시 메뉴선택, 0 입력시 종료");
+        } else {
+            System.out.println("잘못입력하셨습니다.");
+            printSelectedMenu(menuName, category);
         }
     }
 
@@ -156,7 +160,7 @@ public class Kiosk {
         return sc.nextLine();
     }
 
-    private void addMenu(String input, String inputNum){ //compareInput에서 장바구니 추가 메서드
+    private void addMenu(String input, String inputNum, String category){ //compareInput에서 장바구니 추가 메서드
         int index = Integer.parseInt(inputNum) - 1;
         if("1".equals(input)){
             menuName.add(menuList.get(index).getFoodName());    //고른 메뉴 이름 저장
@@ -166,6 +170,7 @@ public class Kiosk {
             System.out.println("취소되었습니다. 계속 진행해주세요");
         } else {
             System.out.println("잘못 입력하셨습니다. 다시 진행해주세요");
+            selectMenu(category);
         }
     }
 }
