@@ -82,7 +82,8 @@ public class Kiosk {
                 break;
             }
 
-            printSelectedMenu(menuName, category);    //선택한 메뉴 목록, 가격 출력 메서드 호출
+            if(!menuName.isEmpty()) //장바구니 추가할때 잘못입력하면 장바구니가 비어있어도 출력되는걸 막음
+                printSelectedMenu(menuName, category);    //선택한 메뉴 목록, 가격 출력 메서드 호출
         }
         return input;
     }
