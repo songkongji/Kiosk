@@ -46,7 +46,7 @@ public class Kiosk {
                 return "0"; // 종료를 위해 0 반환
             }
 
-            switch (inputNum){
+            switch (inputNum){ //메뉴 번호에 따라 메뉴 추가
                 case "1" :
                     input = inputReturn(inputNum);
                     addMenu(input, inputNum, category);
@@ -82,8 +82,7 @@ public class Kiosk {
                 break;
             }
 
-            if(!menuName.isEmpty())
-                printSelectedMenu(menuName, category);    //선택한 메뉴 목록, 가격 출력 메서드 호출
+            printSelectedMenu(menuName, category);    //선택한 메뉴 목록, 가격 출력 메서드 호출
         }
         return input;
     }
@@ -95,9 +94,11 @@ public class Kiosk {
 
         if("4".equals(input)){
             System.out.println("아래와 같이 주문 하시겠습니까?\n[ Orders ]");
+
             for (String menu : menuName) {
                 System.out.println(menu);
             }
+
             System.out.println("[ Total }");
             System.out.println("가격 : " + MenuItem.getTotalPrice() + "원");
             System.out.println("1. 주문     2. 메뉴판으로 돌아가기");
@@ -105,8 +106,8 @@ public class Kiosk {
 
             if ("1".equals(selectInput)){
                 System.out.println("주문이 완료되었습니다. 금액은 " + MenuItem.getTotalPrice() + "원 입니다.");
-                MenuItem.totalPrice(-MenuItem.getTotalPrice());
-                menuName.removeAll(menuName);   //주문 완료시 장바구니 다 비우기
+                MenuItem.totalPrice(-MenuItem.getTotalPrice()); //주문 완료시 토탈프라이스 비우기
+                menuName.removeAll(menuName);   //주문 완료시 장바구니 비우기
                 selectMenu(category);
             } else if ("2".equals(selectInput)) {
                 selectMenu(category);
@@ -117,7 +118,7 @@ public class Kiosk {
         } else if ("5".equals(input)) {
             menuName.removeAll(menuName);
             MenuItem.totalPrice(-MenuItem.getTotalPrice());
-            System.out.println("장바구니가 초기화됐습니다. 다시 선택하세요.(1 ~ 4 입력시 메뉴선택, 0 입력시 종료");
+            System.out.println("장바구니가 초기화됐습니다. 다시 선택하세요.(1 ~ 4 입력시 메뉴선택, 0 입력시 종료, 000 입력시 카테고리 돌아가기)");
         } else {
             System.out.println("잘못입력하셨습니다.");
             printSelectedMenu(menuName, category);
@@ -128,7 +129,7 @@ public class Kiosk {
 
     private boolean exitProgram(String inputNum){    //프로그램 종료 메서드
         return "0".equals(inputNum);
-    }
+    }   //프로그램 종료 메서드
 
     private boolean compareCategory(String category){ // 고른 카테고리에 따라 분기점
         if("1".equals(category)){
